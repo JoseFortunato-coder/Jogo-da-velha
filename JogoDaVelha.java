@@ -59,7 +59,16 @@ class Painel extends JPanel {
         g.drawString("O", 70, 140);
     }
 }
+//for(int linha = 0; linha < 3; linha++) {
 
+       // for(int coluna = 0; coluna < 3; coluna++) {
+
+        //if(tabuleiro[linha][coluna] == 'X') {
+
+//int x = coluna * 200 + 80;
+//int y = linha * 200 + 120;
+
+            //g.drawString("X", x, y);
 
 
 
