@@ -25,8 +25,10 @@ public class JogoDaVelha  {
 
                int linha = e.getY() / casa;
                int coluna = e.getX() / casa;
-               Jogo.Jogar(linha, coluna);
-               Jogo.repaint();
+               if (Jogo.VezDoJogador) {
+                   Jogo.Jogar(linha, coluna);
+                   Jogo.repaint();
+               }
            }
        });
             }
@@ -36,11 +38,18 @@ class Painel extends JPanel {
     char[][] tabuleiro = new char[3][3];
     char jogador = 'X';
     char ia = 'O';
+    boolean VezDoJogador = true;
 
     public void Jogar(int linha, int coluna) {
         if (tabuleiro[linha][coluna] == '\0') {
             tabuleiro[linha][coluna] = jogador;
-
+            VezDoJogador = false;
+        }
+    }
+    public void JogadaDaIa(int linha, int coluna) {
+        if (tabuleiro[linha][coluna] == '\0') {
+            tabuleiro[linha][coluna] = ia;
+            VezDoJogador = true;
         }
     }
     @Override
@@ -51,24 +60,29 @@ class Painel extends JPanel {
         g.drawLine( casas , 0,  casas , tamanho);
         g.drawLine( casas  * 2, 0,  casas  * 2, tamanho);
 
-        // linhas horizontais
         g.drawLine(0,  casas , tamanho, casas);
         g.drawLine(0,  casas  * 2, tamanho, casas * 2);
         g.setFont(new Font("Arial", Font.BOLD, 80));
-        g.drawString("X", 70, 140);
-        g.drawString("O", 70, 140);
+
+        for(int linha = 0; linha < 3; linha++) {
+
+            for (int coluna = 0; coluna < 3; coluna++) {
+                if (tabuleiro[linha][coluna] == 'X') {
+                    int x = coluna * 200 + 80;
+                    int y = linha * 200 + 120;
+                    g.drawString("X", x, y);
+                }
+
+                    if (tabuleiro[linha][coluna] == 'O') {
+                        int x = coluna * 200 + 80;
+                        int y = linha * 200 + 120;
+                        g.drawString("O", x, y);
+                    }
+            }
+        }
     }
 }
-//for(int linha = 0; linha < 3; linha++) {
 
-       // for(int coluna = 0; coluna < 3; coluna++) {
-
-        //if(tabuleiro[linha][coluna] == 'X') {
-
-//int x = coluna * 200 + 80;
-//int y = linha * 200 + 120;
-
-            //g.drawString("X", x, y);
 
 
 
