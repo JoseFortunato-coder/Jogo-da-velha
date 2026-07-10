@@ -36,7 +36,7 @@ public class JogoDaVelha  {
     }
 class Painel extends JPanel {
     Random random = new Random();
-    char[][] tabuleiro = new char[3][3];
+    char[][] tabuleiro = new char[2][2];
     public Painel() {
         XouO();
     }
@@ -44,6 +44,20 @@ class Painel extends JPanel {
     char ia  ;
 
     boolean VezDoJogador = true;
+    public boolean venceu(char simbolo) {
+        if (venceu(tabuleiro[0][0])) {
+            return tabuleiro[0][0] == simbolo &&
+            tabuleiro[0][2] = 'X';
+            System.out.println("Jogador venceu!");
+        }
+
+        if (venceu(ia)) {
+
+            System.out.println("IA venceu!");
+        }
+        return venceu;
+    }
+
     public void XouO (){
         if (random.nextInt(2) == 0) {
         jogador = 'X';
@@ -65,9 +79,8 @@ class Painel extends JPanel {
             VezDoJogador = true;
         }
     }
-    public void VenceuOuNão (){
-        boolean venceu (char tabuleiro);
-    }
+
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
