@@ -36,7 +36,7 @@ public class JogoDaVelha  {
     }
 class Painel extends JPanel {
     Random random = new Random();
-    char[][] tabuleiro = new char[2][2];
+    char[][] tabuleiro = new char[3][3];
     public Painel() {
         XouO();
     }
@@ -45,18 +45,48 @@ class Painel extends JPanel {
 
     boolean VezDoJogador = true;
     public boolean venceu(char simbolo) {
-        if (venceu(tabuleiro[0][0])) {
-            return tabuleiro[0][0] == simbolo &&
-            tabuleiro[0][2] = 'X';
-            System.out.println("Jogador venceu!");
+        if (tabuleiro[0][0] == simbolo &&
+                tabuleiro[0][1] == simbolo &&
+                tabuleiro[0][2] == simbolo) {
+            return true;
+        }
+        if (tabuleiro[1][0] == simbolo &&
+                tabuleiro[1][1] == simbolo &&
+                tabuleiro[1][2] == simbolo ) {
+            return true;
+        }
+        if (tabuleiro[2][0] == simbolo &&
+                tabuleiro[2][1] == simbolo &&
+                tabuleiro[2][2] == simbolo ) {
+            return true;
+        }
+        if (tabuleiro[0][0] == simbolo &&
+                tabuleiro[1][0] == simbolo &&
+                tabuleiro[2][0] == simbolo ) {
+            return true;
+        }
+        if (tabuleiro[0][1] == simbolo &&
+                tabuleiro[1][1] == simbolo &&
+                tabuleiro[2][1] == simbolo ) {
+            return true;
+        }if (tabuleiro[0][2] == simbolo &&
+                tabuleiro[1][2] == simbolo &&
+                tabuleiro[2][2] == simbolo ) {
+            return true;
+        }if (tabuleiro[0][0] == simbolo &&
+                tabuleiro[1][1] == simbolo &&
+                tabuleiro[2][2] == simbolo ) {
+            return true;
+        }if (tabuleiro[0][2] == simbolo &&
+                tabuleiro[1][1] == simbolo &&
+                tabuleiro[2][0] == simbolo ) {
+            return true;
         }
 
-        if (venceu(ia)) {
 
-            System.out.println("IA venceu!");
-        }
-        return venceu;
+return false;
     }
+
 
     public void XouO (){
         if (random.nextInt(2) == 0) {
@@ -71,11 +101,17 @@ class Painel extends JPanel {
         if (tabuleiro[linha][coluna] == '\0') {
             tabuleiro[linha][coluna] = jogador;
             VezDoJogador = false;
+            if (venceu(jogador)) {
+                System.out.println("Jogador ganhou");
+            }
         }
     }
     public void JogadaDaIa(int linha, int coluna) {
         if (tabuleiro[linha][coluna] == '\0') {
             tabuleiro[linha][coluna] = ia;
+            if (venceu(ia)) {
+                System.out.println("IA ganhou");
+            }
             VezDoJogador = true;
         }
     }
