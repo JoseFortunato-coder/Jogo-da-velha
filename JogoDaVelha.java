@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Random;
 import java.util.Scanner;
 import javax.swing.*;
 
@@ -34,12 +35,24 @@ public class JogoDaVelha  {
             }
     }
 class Painel extends JPanel {
-
+    Random random = new Random();
     char[][] tabuleiro = new char[3][3];
-    char jogador = 'X';
-    char ia = 'O';
-    boolean VezDoJogador = true;
+    public Painel() {
+        XouO();
+    }
+    char jogador ;
+    char ia  ;
 
+    boolean VezDoJogador = true;
+    public void XouO (){
+        if (random.nextInt(2) == 0) {
+        jogador = 'X';
+        ia = 'O';
+        } else {
+            jogador = 'O';
+            ia = 'X';
+        }
+    }
     public void Jogar(int linha, int coluna) {
         if (tabuleiro[linha][coluna] == '\0') {
             tabuleiro[linha][coluna] = jogador;
@@ -51,6 +64,9 @@ class Painel extends JPanel {
             tabuleiro[linha][coluna] = ia;
             VezDoJogador = true;
         }
+    }
+    public void VenceuOuNão (){
+        boolean venceu (char tabuleiro);
     }
     @Override
     public void paintComponent(Graphics g) {
