@@ -44,6 +44,7 @@ class Painel extends JPanel {
     char ia  ;
 
     boolean VezDoJogador = true;
+    boolean VezdaIa = true;
     public boolean venceu(char simbolo) {
         if (tabuleiro[0][0] == simbolo &&
                 tabuleiro[0][1] == simbolo &&
@@ -109,6 +110,7 @@ return false;
     public void JogadaDaIa(int linha, int coluna) {
         if (tabuleiro[linha][coluna] == '\0') {
             tabuleiro[linha][coluna] = ia;
+            VezdaIa = false;
             if (venceu(ia)) {
                 System.out.println("IA ganhou");
             }
