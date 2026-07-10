@@ -87,6 +87,9 @@ class Painel extends JPanel {
 
 return false;
     }
+    boolean testarJogada(char simbolo, int linha, int coluna){
+
+    }
 
 
     public void XouO (){
