@@ -88,8 +88,14 @@ class Painel extends JPanel {
 return false;
     }
     boolean testarJogada(char simbolo, int linha, int coluna){
-
+        if  (tabuleiro[linha][coluna] == '\0')
+            venceu(jogador);
+            return true;
+        else{
+            return false;
+        }
     }
+
 
 
     public void XouO (){
@@ -101,6 +107,7 @@ return false;
             ia = 'X';
         }
     }
+
     public void Jogar(int linha, int coluna) {
         if (tabuleiro[linha][coluna] == '\0') {
             tabuleiro[linha][coluna] = jogador;
