@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Random;
@@ -30,7 +32,13 @@ public class JogoDaVelha  {
                    Jogo.Jogar(linha, coluna);
                    Jogo.repaint();
                }
+               if (Jogo.VezdaIa){
+                   Jogo.JogadaDaIa(linha, coluna);
+                   Jogo.repaint();
+
+               }
            }
+
        });
             }
     }
@@ -88,13 +96,21 @@ class Painel extends JPanel {
 return false;
     }
     boolean testarJogada(char simbolo, int linha, int coluna){
-        if  (tabuleiro[linha][coluna] == '\0')
-            venceu(jogador);
-            return true;
-        else{
-            return false;
-        }
+        linha = random.nextInt(3);
+        coluna = random.nextInt(3);
+        while (tabuleiro[linha][coluna] != '\0'){
+                linha = random.nextInt(3);
+                coluna = random.nextInt(3);
+                }
+        if (tabuleiro[linha][coluna] == '\0') {
+            tabuleiro[linha][coluna] = ia;
+            }
+
+
+
+        return false;
     }
+
 
 
 
@@ -112,14 +128,30 @@ return false;
         if (tabuleiro[linha][coluna] == '\0') {
             tabuleiro[linha][coluna] = jogador;
             VezDoJogador = false;
+            Timer timer = new Timer(1000, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    JogadaDaIa( linha, coluna );
+                    repaint();
+                }
+            });
+
+            timer.start();
             if (venceu(jogador)) {
                 System.out.println("Jogador ganhou");
             }
+
+            VezdaIa = true;
         }
+
     }
+
     public void JogadaDaIa(int linha, int coluna) {
+
         if (tabuleiro[linha][coluna] == '\0') {
-            tabuleiro[linha][coluna] = ia;
+            testarJogada(ia, linha, coluna);
+
+            repaint();
             VezdaIa = false;
             if (venceu(ia)) {
                 System.out.println("IA ganhou");
@@ -127,6 +159,7 @@ return false;
             VezDoJogador = true;
         }
     }
+
 
 
     @Override
