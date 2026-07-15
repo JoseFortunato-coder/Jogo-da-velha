@@ -4,12 +4,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Random;
-import java.util.Scanner;
 import javax.swing.*;
 
 public class JogoDaVelha  {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+
         JFrame Janela = new JFrame("Jogo da velha");
         Painel Jogo = new Painel();
         Janela.add(Jogo);
@@ -20,33 +19,45 @@ public class JogoDaVelha  {
         Janela.setLocationRelativeTo(null);
         Janela.setVisible(true);
         Jogo.addMouseListener(new MouseAdapter() {
-           @Override
-           public void mouseClicked(MouseEvent e) {
-               int tamanho = Math.min(Jogo.getWidth(), Jogo.getHeight());
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int tamanho = Math.min(Jogo.getWidth(), Jogo.getHeight());
 
-               int casa = tamanho / 3;
+                int casa = tamanho / 3;
 
-               int linha = e.getY() / casa;
-               int coluna = e.getX() / casa;
-               if (Jogo.VezDoJogador) {
-                   Jogo.Jogar(linha, coluna);
-                   Jogo.repaint();
-               }
-               if (Jogo.VezdaIa){
-                   Jogo.JogadaDaIa(linha, coluna);
-                   Jogo.repaint();
+                int linha = e.getY() / casa;
+                int coluna = e.getX() / casa;
+                if (Jogo.VezDoJogador && !Jogo.jogoAcabou) {
+                    Jogo.Jogar(linha, coluna);
+                    Jogo.repaint();
+                }
 
-               }
-           }
-
-       });
             }
+
+        });
     }
+}
 class Painel extends JPanel {
     Random random = new Random();
     char[][] tabuleiro = new char[3][3];
+    Timer timerIa;
+    boolean jogoAcabou = false;
     public Painel() {
+
         XouO();
+        timerIa = new Timer(500, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JogadaDaIa();
+                repaint();
+                timerIa.stop();
+            }
+        });
+        timerIa.setRepeats(false);
+        if (venceu(ia)) {
+
+        }
+
     }
     char jogador ;
     char ia  ;
@@ -58,6 +69,7 @@ class Painel extends JPanel {
                 tabuleiro[0][1] == simbolo &&
                 tabuleiro[0][2] == simbolo) {
             return true;
+
         }
         if (tabuleiro[1][0] == simbolo &&
                 tabuleiro[1][1] == simbolo &&
@@ -93,18 +105,18 @@ class Painel extends JPanel {
         }
 
 
-return false;
+        return false;
     }
     boolean testarJogada(char simbolo, int linha, int coluna){
         linha = random.nextInt(3);
         coluna = random.nextInt(3);
         while (tabuleiro[linha][coluna] != '\0'){
-                linha = random.nextInt(3);
-                coluna = random.nextInt(3);
-                }
+            linha = random.nextInt(3);
+            coluna = random.nextInt(3);
+        }
         if (tabuleiro[linha][coluna] == '\0') {
             tabuleiro[linha][coluna] = ia;
-            }
+        }
 
 
 
@@ -116,8 +128,8 @@ return false;
 
     public void XouO (){
         if (random.nextInt(2) == 0) {
-        jogador = 'X';
-        ia = 'O';
+            jogador = 'X';
+            ia = 'O';
         } else {
             jogador = 'O';
             ia = 'X';
@@ -127,18 +139,14 @@ return false;
     public void Jogar(int linha, int coluna) {
         if (tabuleiro[linha][coluna] == '\0') {
             tabuleiro[linha][coluna] = jogador;
-            VezDoJogador = false;
-            Timer timer = new Timer(1000, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    JogadaDaIa( linha, coluna );
-                    repaint();
-                }
-            });
 
-            timer.start();
+            repaint();
+            VezDoJogador = false;
+            timerIa.start();
             if (venceu(jogador)) {
                 System.out.println("Jogador ganhou");
+                boolean jogoAcabou = true;
+                timerIa.stop();
             }
 
             VezdaIa = true;
@@ -146,19 +154,26 @@ return false;
 
     }
 
-    public void JogadaDaIa(int linha, int coluna) {
+    public void JogadaDaIa() {
+        int linha = random.nextInt(3);
+        int coluna = random.nextInt(3);
+        if (jogoAcabou) {
+            return;
+        }
 
-        if (tabuleiro[linha][coluna] == '\0') {
             testarJogada(ia, linha, coluna);
-
             repaint();
+
             VezdaIa = false;
             if (venceu(ia)) {
                 System.out.println("IA ganhou");
+                boolean jogoAcabou = true;
+                timerIa.stop();
             }
+
             VezDoJogador = true;
         }
-    }
+
 
 
 
@@ -183,18 +198,14 @@ return false;
                     g.drawString("X", x, y);
                 }
 
-                    if (tabuleiro[linha][coluna] == 'O') {
-                        int x = coluna * 200 + 80;
-                        int y = linha * 200 + 120;
-                        g.drawString("O", x, y);
-                    }
+                if (tabuleiro[linha][coluna] == 'O') {
+                    int x = coluna * 200 + 80;
+                    int y = linha * 200 + 120;
+                    g.drawString("O", x, y);
+                }
+
+
+            }
             }
         }
     }
-}
-
-
-
-
-
-
