@@ -107,21 +107,55 @@ class Painel extends JPanel {
 
         return false;
     }
-    boolean testarJogada(char simbolo, int linha, int coluna){
+    boolean testarJogada(char simbolo, int linha, int coluna) {
         linha = random.nextInt(3);
         coluna = random.nextInt(3);
-        while (tabuleiro[linha][coluna] != '\0'){
+        while (tabuleiro[linha][coluna] != '\0') {
             linha = random.nextInt(3);
             coluna = random.nextInt(3);
         }
         if (tabuleiro[linha][coluna] == '\0') {
             tabuleiro[linha][coluna] = ia;
+
         }
+        if (VezdaIa && tabuleiro[0][0] == jogador &&
+                tabuleiro[0][1] == jogador) {
+            tabuleiro[0][2] = ia;
 
+        } if ( VezdaIa && tabuleiro[1][0] == jogador &&
+                tabuleiro[1][1] == jogador) {
+            tabuleiro[1][2] = ia;
 
+        } if ( VezdaIa && tabuleiro[2][0] == jogador &&
+                tabuleiro[2][1] == jogador ) {
+            tabuleiro[2][2] = ia;
 
+        } if ( VezdaIa && tabuleiro[0][0] == jogador &&
+                tabuleiro[1][0] == jogador ) {
+            tabuleiro[2][0] = ia;
+
+        } if ( VezdaIa && tabuleiro[0][1] == jogador &&
+                tabuleiro[1][1] == jogador ) {
+            tabuleiro[2][1] = ia;
+
+        } if ( VezdaIa && tabuleiro[0][2] == jogador &&
+                tabuleiro[1][2] == jogador ) {
+            tabuleiro[2][2] = ia;
+
+        } if ( VezdaIa && tabuleiro[0][0] == jogador &&
+                tabuleiro[1][1] == jogador ) {
+            tabuleiro[2][2] = ia;
+
+        } if ( VezdaIa && tabuleiro[0][2] == jogador &&
+                tabuleiro[1][1] == jogador ) {
+            tabuleiro[2][0] = ia;
+
+        }
         return false;
     }
+
+
+
 
 
 
@@ -145,7 +179,7 @@ class Painel extends JPanel {
             timerIa.start();
             if (venceu(jogador)) {
                 System.out.println("Jogador ganhou");
-                boolean jogoAcabou = true;
+                jogoAcabou = true;
                 timerIa.stop();
             }
 
@@ -167,8 +201,9 @@ class Painel extends JPanel {
             VezdaIa = false;
             if (venceu(ia)) {
                 System.out.println("IA ganhou");
-                boolean jogoAcabou = true;
+                jogoAcabou = true;
                 timerIa.stop();
+
             }
 
             VezDoJogador = true;
